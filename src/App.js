@@ -1,10 +1,9 @@
 import { useState } from "react";
-
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-
 import IconButton from "@mui/material/IconButton";
+import Icon from "@mui/material/Icon";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
@@ -18,10 +17,23 @@ function App() {
     },
   ]);
 
+  const handleChangeInput = (index, e) => {
+    // console.log(index, event.target.name)
+    const values = [...inputField]
+    values[index][e.target.name] = e.target.value
+    setInputField(values)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(e.target.type)
+    console.log(inputField)
+  }
+
   return (
     <Container>
       <h1>Add new member</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         {inputField.map((inputField, index) => (
           <div key={index}>
             <TextField
@@ -30,6 +42,7 @@ function App() {
               label="First Name"
               variant="filled"
               value={inputField.firstName}
+              onChange={(e) => handleChangeInput(index, e)}
             />
             <TextField
               className="text-field-mui"
@@ -37,6 +50,7 @@ function App() {
               label="Last Name"
               variant="filled"
               value={inputField.lastName}
+              onChange={(e) => handleChangeInput(index, e)}
             />
             <IconButton>
               <RemoveCircleOutlineIcon />
@@ -46,6 +60,15 @@ function App() {
             </IconButton>
           </div>
         ))}
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          endIcon={<Icon>send</Icon>}
+          onClick={handleSubmit}
+        >
+          Send
+        </Button>
       </form>
     </Container>
   );
