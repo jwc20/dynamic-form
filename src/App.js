@@ -10,7 +10,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import "./App.css";
 
 function App() {
-  const [inputField, setInputField] = useState([
+  const [inputFields, setInputFields] = useState([
     {
       firstName: "",
       lastName: "",
@@ -19,29 +19,35 @@ function App() {
 
   const handleChangeInput = (index, e) => {
     // console.log(index, event.target.name)
-    const values = [...inputField]
-    values[index][e.target.name] = e.target.value
-    setInputField(values)
-  }
+    const values = [...inputFields];
+    values[index][e.target.name] = e.target.value;
+    setInputFields(values);
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log(e.target.type)
-    console.log(inputField)
-  }
+    e.preventDefault();
+    console.log(e.target.type);
+    console.log(inputFields);
+  };
+
+  const handleAddFields = () => {
+    setInputFields([...inputFields, { firstName: "", lastName: "" }]);
+  };
+
+  const handleRemoveFields = () => {};
 
   return (
     <Container>
       <h1>Add new member</h1>
       <form onSubmit={handleSubmit}>
-        {inputField.map((inputField, index) => (
+        {inputFields.map((inputFields, index) => (
           <div key={index}>
             <TextField
               className="text-field-mui"
               name="firstName"
               label="First Name"
               variant="filled"
-              value={inputField.firstName}
+              value={inputFields.firstName}
               onChange={(e) => handleChangeInput(index, e)}
             />
             <TextField
@@ -49,13 +55,13 @@ function App() {
               name="lastName"
               label="Last Name"
               variant="filled"
-              value={inputField.lastName}
+              value={inputFields.lastName}
               onChange={(e) => handleChangeInput(index, e)}
             />
             <IconButton>
               <RemoveCircleOutlineIcon />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={() => handleAddFields()}>
               <AddCircleOutlineIcon />
             </IconButton>
           </div>
