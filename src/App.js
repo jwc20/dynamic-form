@@ -26,7 +26,7 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.type);
+    // console.log(e.target.type);
     console.log(inputFields);
   };
 
@@ -34,7 +34,11 @@ function App() {
     setInputFields([...inputFields, { firstName: "", lastName: "" }]);
   };
 
-  const handleRemoveFields = () => {};
+  const handleRemoveFields = (index) => {
+    const values = [...inputFields];
+    values.splice(index, 1);
+    setInputFields(values);
+  };
 
   return (
     <Container>
@@ -58,7 +62,7 @@ function App() {
               value={inputFields.lastName}
               onChange={(e) => handleChangeInput(index, e)}
             />
-            <IconButton>
+            <IconButton onClick={() => handleRemoveFields(index)}>
               <RemoveCircleOutlineIcon />
             </IconButton>
             <IconButton onClick={() => handleAddFields()}>
